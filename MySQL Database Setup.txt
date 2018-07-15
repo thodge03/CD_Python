@@ -1,0 +1,14 @@
+Open MySQL Workbench
+Double Click on the existing connection: Main MYSQL80 which was already set up to localhost: 3306
+In the editor, type USE twitter
+Click the lightning bolt to switch to twitter database
+various queries:
+
+SELECT * FROM users (to get all info)
+
+DELETE FROM users WHERE id = 1 (to delete user 1)
+
+INSERT INTO users(first_name, last_name)
+VALUES('Best', 'Student')  (to enter new user first & last name)
+
+DONE!
