@@ -1,0 +1,38 @@
+Error 1 - I tried using a port other than 3306. 
+Ouput:  sqlalchemy.exc.OperationalError: (_mysql_exceptions.OperationalError) (2003, "Can't connect to MySQL server on '127.0.0.1' (10061)")
+Fix: Make sure the port is the default 3306, or that an alternate port that is chosen has been opened & running on MySQL Workbench. (Not sure exactly how to execute this but I know it is possible!)
+
+Error 2- Blank or incorrect password.
+Output [No password]: sqlalchemy.exc.OperationalError: (_mysql_exceptions.OperationalError) (1045, "Access denied for user 'root'@'localhost' (using password: NO)")
+Output [Incorrect password]: sqlalchemy.exc.OperationalError: (_mysql_exceptions.OperationalError) (1045, "Access denied for user 'root'@'localhost' (using password: YES)")
+Fix: Make sure that the correct password is entered, and it is not left blank. 
+
+Error 3- Changed 'user' to 'username'.
+Output: DATABASE_URI = "mysql://{}:{}@127.0.0.1:{}/{}".format(config['user'], config['password'], config['port'], config['database'])   KeyError: 'user'
+Fix: Make sure that the the names of the credentials are the same in both the config section and below in the DATABASE_URI. I discovered that they can be named whatever as long as they match, by changing 'user' to 'username' in the DATABASE_URI and it successfully connected again. However, they should not be far off of what they are so there is no confusion and it is as straightforward as possible.
+
+Error 3.2 - Change 'config' to 'configuration'.
+Output: same as above
+Fix: Similar to above, the name of the section can be changed as long as it is consistent in following sections.
+
+Error 4- Added an additional argument to 'database', so it became 'database' : db, friends
+Output: SyntaxError: invalid syntax
+Fix: Only include 1 database as the argument for the 'database' credential.
+
+Error 5- No 'user' given, with and without 'password' entered
+Output: sqlalchemy.exc.OperationalError: (_mysql_exceptions.OperationalError) (1045, "Access denied for user 'ODBC'@'localhost' (using password: NO)")  AND sqlalchemy.exc.OperationalError: (_mysql_exceptions.OperationalError) (1045, "Access denied for user 'ODBC'@'localhost' (using password: YES)")
+Fix: Make sure the user is specified with the correct password. If no user specified, Windows defaults to ODBC (I think as an admin feature) which is not what we want!
+
+Error 6- Enter wrong 'user' credential, with and without password.
+Output: sqlalchemy.exc.OperationalError: (_mysql_exceptions.OperationalError) (1045, "Access denied for user 'rootroot'@'localhost' (using password: YES)")  AND sqlalchemy.exc.OperationalError: (_mysql_exceptions.OperationalError) (1045, "Access denied for user 'rootroot'@'localhost' (using password: NO)")
+Fix: Make sure username and password are correct.
+
+Error 7- I thought changing the 'host' would effect the connection but it did not! 
+Output: None, ran as normal!
+Fix: No fix needed. After some research it appears that the host defaults to localhost anyway, so we don't need to explicitly state the host, although I am assuming it is best practice and a good habit to include if/when the host is not localhost anymore.
+
+** I believe these are all the errors, other than various syntax issues**
+
+
+
+
